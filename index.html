@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch A1 — Exam Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:#0d0d0d;
+  --paper:#fafaf7;
+  --warm:#f5f0e8;
+  --gold:#c9a84c;
+  --gold2:#e8c97a;
+  --red:#c0392b;
+  --blue:#1a3a6b;
+  --green:#1a6b3a;
+  --border:#e0dbd0;
+  --muted:#8a8070;
+  --surface:#fff;
+  --shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+
+html,body{height:100%;background:var(--paper);color:var(--ink);font-family:'JetBrains Mono',monospace;overflow:hidden}
+
+/* NOISE TEXTURE */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+#app{position:relative;z-index:1;display:grid;grid-template-columns:260px 1fr;grid-template-rows:52px 1fr;height:100vh}
+
+/* TOPBAR */
+#topbar{
+  grid-column:1/-1;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  background:var(--ink);
+  border-bottom:3px solid var(--gold);
+}
+
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:16px;
+  color:#fff;letter-spacing:-0.3px;
+}
+
+.logo-flag{font-size:20px}
+.logo em{color:var(--gold);font-style:normal}
+
+.exam-badge{
+  padding:3px 12px;border-radius:2px;
+  background:var(--gold);color:var(--ink);
+  font-family:'Syne',sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:1.5px;text-transform:uppercase;
+}
+
+.progress-wrap{display:flex;align-items:center;gap:10px}
+.progress-label{font-size:11px;color:#888;letter-spacing:1px}
+.progress-bar-outer{width:120px;height:6px;background:#222;border-radius:3px}
+.progress-bar-inner{height:100%;background:var(--gold);border-radius:3px;transition:width 0.4s ease}
+.progress-pct{font-size:11px;color:var(--gold);font-weight:500}
+
+/* SIDEBAR */
+#sidebar{
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow:hidden;background:var(--warm);
+}
+
+.sidebar-head{
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  font-family:'Syne',sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:2px;text-transform:uppercase;color:var(--muted);
+}
+
+.nav-scroll{flex:1;overflow-y:auto;padding:8px}
+.nav-scroll::-webkit-scrollbar{width:3px}
+.nav-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.nav-section-label{
+  font-size:9px;text-transform:uppercase;letter-spacing:2px;
+  color:var(--muted);padding:10px 8px 5px;
+}
+
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:4px;margin-bottom:2px;
+  cursor:pointer;font-size:12px;color:#444;
+  border:1px solid transparent;transition:all 0.15s;
+  position:relative;
+}
+
+.nav-item:hover{background:#fff;border-color:var(--border);color:var(--ink)}
+.nav-item.active{background:#fff;border-color:var(--gold);color:var(--ink);font-weight:500}
+.nav-item.active::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:60%;background:var(--gold);border-radius:0 2px 2px 0;
+}
+
+.nav-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
+.nav-check{margin-left:auto;font-size:11px;color:var(--green)}
+
+/* STREAK */
+.streak-box{
+  margin:8px;padding:10px 12px;
+  background:var(--ink);border-radius:6px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.streak-label{font-size:11px;color:#888;letter-spacing:1px}
+.streak-val{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--gold)}
+
+/* MAIN */
+#main{display:flex;flex-direction:column;overflow:hidden;background:var(--paper)}
+
+/* TOPIC HEADER */
+#topic-header{
+  padding:16px 28px;border-bottom:1px solid var(--border);
+  background:var(--surface);display:flex;align-items:center;justify-content:space-between;
+}
+
+.topic-title{font-family:'Fraunces',serif;font-size:22px;font-weight:300;font-style:italic}
+.topic-sub{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:0.5px}
+
+.mode-tabs{display:flex;gap:4px}
+.tab-btn{
+  padding:5px 12px;border-radius:3px;
+  border:1px solid var(--border);background:transparent;
+  font-family:'Syne',sans-serif;font-size:11px;font-weight:600;
+  cursor:pointer;color:var(--muted);transition:all 0.15s;letter-spacing:0.5px;
+}
+.tab-btn:hover{border-color:var(--ink);color:var(--ink)}
+.tab-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* CONTENT */
+#content{flex:1;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:20px}
+#content::-webkit-scrollbar{width:5px}
+#content::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* CARDS */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;padding:20px;box-shadow:var(--shadow);
+}
+
+.card-title{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);
+  margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+
+.card-title::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+
+/* VOCAB TABLE */
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.vocab-cell{padding:9px 12px;background:var(--surface);font-size:12px;line-height:1.5}
+.vocab-cell.header{background:var(--ink);color:var(--gold);font-family:'Syne',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px}
+.vocab-de{font-weight:500;color:var(--ink)}
+.vocab-en{color:var(--muted)}
+.vocab-ex{font-style:italic;color:var(--blue);font-size:11px}
+
+/* GRAMMAR BLOCKS */
+.grammar-rule{
+  border-left:3px solid var(--gold);padding:12px 16px;
+  background:var(--warm);border-radius:0 4px 4px 0;margin-bottom:10px;
+}
+.rule-title{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;margin-bottom:6px;color:var(--ink)}
+.rule-body{font-size:12px;line-height:1.8;color:#333}
+.rule-body code{
+  background:var(--ink);color:var(--gold2);
+  padding:2px 7px;border-radius:3px;font-size:11px;
+}
+.rule-note{
+  margin-top:8px;padding:6px 10px;
+  background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);
+  border-radius:3px;font-size:11px;color:var(--muted);
+}
+
+/* CONJUGATION TABLE */
+.conj-table{width:100%;border-collapse:collapse;font-size:12px}
+.conj-table th{background:var(--ink);color:var(--gold);padding:7px 12px;text-align:left;font-family:'Syne',sans-serif;font-size:11px;letter-spacing:1px}
+.conj-table td{padding:7px 12px;border-bottom:1px solid var(--border)}
+.conj-table tr:last-child td{border-bottom:none}
+.conj-table tr:hover td{background:var(--warm)}
+.highlight-cell{color:var(--blue);font-weight:500}
+
+/* FLASHCARDS */
+.flashcard-section{display:flex;flex-direction:column;align-items:center;gap:16px}
+.flashcard-counter{font-size:12px;color:var(--muted)}
+.flashcard-wrap{
+  width:100%;max-width:480px;height:160px;
+  perspective:1000px;cursor:pointer;
+}
+.flashcard{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.flashcard.flipped{transform:rotateY(180deg)}
+.card-face{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:8px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:24px;text-align:center;
+  border:2px solid var(--border);box-shadow:var(--shadow);background:var(--surface);
+}
+.card-face.back{
+  transform:rotateY(180deg);
+  background:var(--ink);border-color:var(--gold);
+}
+.card-face.back .fc-word{color:var(--gold)}
+.card-face.back .fc-sub{color:#888}
+.fc-word{font-family:'Fraunces',serif;font-size:28px;font-weight:300}
+.fc-sub{font-size:12px;color:var(--muted);margin-top:6px}
+.fc-tag{
+  position:absolute;top:10px;left:10px;
+  font-size:10px;padding:2px 7px;border-radius:2px;
+  background:var(--warm);color:var(--muted);
+  font-family:'Syne',sans-serif;letter-spacing:1px;text-transform:uppercase;
+}
+.fc-controls{display:flex;gap:10px}
+.fc-btn{
+  padding:8px 20px;border-radius:4px;border:1px solid var(--border);
+  background:var(--surface);font-family:'Syne',sans-serif;font-weight:600;
+  font-size:11px;cursor:pointer;letter-spacing:0.5px;transition:all 0.15s;
+}
+.fc-btn.prev:hover{border-color:var(--red);color:var(--red)}
+.fc-btn.next:hover{border-color:var(--green);color:var(--green)}
+.fc-btn.flip{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+.fc-btn.flip:hover{background:#222}
+.fc-hint{font-size:11px;color:var(--muted);opacity:0.7}
+
+/* QUIZ */
+.quiz-wrap{max-width:560px}
+.quiz-q{
+  font-family:'Fraunces',serif;font-size:18px;font-weight:300;
+  line-height:1.5;margin-bottom:16px;
+}
+.quiz-q strong{color:var(--blue);font-style:italic}
+.quiz-opts{display:flex;flex-direction:column;gap:7px}
+.q-opt{
+  padding:10px 14px;border-radius:4px;
+  border:1px solid var(--border);background:var(--surface);
+  font-size:12px;text-align:left;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;
+  transition:all 0.15s;color:var(--ink);
+}
+.q-opt:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
+.q-opt.correct{border-color:var(--green);background:rgba(26,107,58,0.06);color:var(--green)}
+.q-opt.wrong{border-color:var(--red);background:rgba(192,57,43,0.06);color:var(--red)}
+.q-opt:disabled{cursor:default}
+.quiz-feedback{
+  margin-top:12px;padding:10px 14px;border-radius:4px;
+  font-size:12px;line-height:1.7;
+}
+.quiz-feedback.ok{background:rgba(26,107,58,0.08);border:1px solid rgba(26,107,58,0.2);color:var(--green)}
+.quiz-feedback.err{background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.2);color:var(--red)}
+.quiz-next{
+  margin-top:10px;padding:8px 20px;border-radius:3px;
+  border:none;background:var(--ink);color:var(--gold);
+  font-family:'Syne',sans-serif;font-weight:700;font-size:11px;
+  cursor:pointer;letter-spacing:1px;transition:background 0.15s;
+}
+.quiz-next:hover{background:#222}
+.quiz-score{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:24px;
+  color:var(--gold);margin-bottom:4px;
+}
+.quiz-score-label{font-size:12px;color:var(--muted)}
+
+/* AI TUTOR */
+#ai-chat{display:flex;flex-direction:column;height:100%}
+.chat-msgs{
+  flex:1;overflow-y:auto;padding:20px 28px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.chat-msgs::-webkit-scrollbar{width:4px}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border)}
+
+.msg-row{display:flex;gap:10px;animation:fadeIn 0.25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.msg-row.user{flex-direction:row-reverse}
+
+.msg-av{
+  width:30px;height:30px;border-radius:4px;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:14px;border:1px solid var(--border);background:var(--warm);
+}
+.msg-row.ai .msg-av{background:var(--ink);border-color:var(--gold);font-size:12px;color:var(--gold);font-family:'Syne',sans-serif;font-weight:700}
+
+.msg-bubble{
+  max-width:75%;padding:10px 14px;border-radius:6px;font-size:12.5px;line-height:1.75;
+}
+.msg-row.ai .msg-bubble{background:var(--surface);border:1px solid var(--border);border-top-left-radius:2px}
+.msg-row.user .msg-bubble{background:var(--ink);color:#fff;border-top-right-radius:2px}
+.msg-bubble strong{color:var(--gold2);font-weight:600}
+.msg-bubble em{color:var(--gold);font-style:italic}
+.msg-bubble code{background:#f0ece4;color:var(--blue);padding:1px 5px;border-radius:2px;font-size:11.5px}
+.msg-row.user .msg-bubble code{background:#222;color:var(--gold2)}
+
+.typing-wrap{display:flex;gap:4px;align-items:center;padding:6px 0}
+.typing-dot{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:blink 1.2s ease infinite}
+.typing-dot:nth-child(2){animation-delay:0.2s}
+.typing-dot:nth-child(3){animation-delay:0.4s}
+@keyframes blink{0%,80%,100%{opacity:0.2}40%{opacity:1}}
+
+.chat-input-wrap{
+  padding:12px 20px 14px;border-top:1px solid var(--border);
+  background:var(--surface);display:flex;gap:8px;
+}
+.chat-input{
+  flex:1;border:1px solid var(--border);border-radius:4px;
+  padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:12px;
+  background:var(--warm);color:var(--ink);outline:none;transition:border-color 0.15s;
+  resize:none;height:40px;
+}
+.chat-input:focus{border-color:var(--gold)}
+.send-btn{
+  padding:9px 16px;border-radius:4px;border:none;
+  background:var(--ink);color:var(--gold);
+  font-family:'Syne',sans-serif;font-weight:700;font-size:12px;
+  cursor:pointer;letter-spacing:0.5px;transition:background 0.15s;white-space:nowrap;
+}
+.send-btn:hover{background:#222}
+.send-btn:disabled{opacity:0.5;cursor:not-allowed}
+
+/* EXAM OVERVIEW */
+.exam-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.exam-part{
+  border:1px solid var(--border);border-radius:6px;padding:16px;
+  background:var(--surface);cursor:pointer;transition:all 0.15s;
+}
+.exam-part:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(201,168,76,0.12)}
+.exam-part-flag{font-size:22px;margin-bottom:8px}
+.exam-part-name{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:4px}
+.exam-part-desc{font-size:11px;color:var(--muted);line-height:1.6}
+.exam-part-info{
+  margin-top:10px;padding-top:10px;border-top:1px solid var(--border);
+  display:flex;gap:10px;
+}
+.exam-info-item{font-size:10px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.exam-info-val{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--ink)}
+
+/* QUICK PHRASES */
+.phrase-list{display:flex;flex-direction:column;gap:6px}
+.phrase-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 12px;border:1px solid var(--border);border-radius:4px;
+  background:var(--surface);font-size:12px;cursor:pointer;transition:border-color 0.15s;
+}
+.phrase-row:hover{border-color:var(--gold)}
+.phrase-de{font-weight:500}
+.phrase-en{color:var(--muted);font-style:italic;font-size:11px}
+.phrase-audio{font-size:14px;opacity:0.5}
+
+/* SPEAKING PRACTICE */
+.speaking-card{
+  border:2px dashed var(--border);border-radius:8px;padding:24px;
+  text-align:center;background:var(--warm);
+}
+.speaking-prompt{font-family:'Fraunces',serif;font-size:20px;font-weight:300;font-style:italic;margin-bottom:12px}
+.speaking-hint{font-size:12px;color:var(--muted);margin-bottom:16px}
+.speaking-example{
+  background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  padding:10px 14px;font-size:12px;color:var(--blue);text-align:left;margin-top:12px;
+}
+
+/* WRITING PRACTICE */
+.writing-prompt{
+  border-left:3px solid var(--gold);padding:12px 16px;
+  background:var(--warm);border-radius:0 4px 4px 0;margin-bottom:14px;
+  font-size:13px;line-height:1.7;
+}
+.writing-area{
+  width:100%;border:1px solid var(--border);border-radius:4px;
+  padding:12px;font-family:'JetBrains Mono',monospace;font-size:12px;
+  background:var(--surface);color:var(--ink);outline:none;
+  resize:vertical;min-height:100px;transition:border-color 0.15s;line-height:1.8;
+}
+.writing-area:focus{border-color:var(--gold)}
+.check-writing-btn{
+  margin-top:8px;padding:8px 20px;border:none;border-radius:3px;
+  background:var(--ink);color:var(--gold);font-family:'Syne',sans-serif;
+  font-weight:700;font-size:11px;cursor:pointer;letter-spacing:1px;
+}
+.writing-feedback{
+  margin-top:12px;padding:12px 14px;border-radius:4px;font-size:12px;line-height:1.8;
+  border:1px solid var(--border);background:var(--surface);
+}
+
+/* TAG PILLS */
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tag{
+  padding:3px 10px;border-radius:20px;
+  border:1px solid var(--border);font-size:11px;
+  color:var(--muted);cursor:pointer;transition:all 0.15s;
+  font-family:'Syne',sans-serif;font-weight:600;letter-spacing:0.3px;
+}
+.tag:hover{border-color:var(--gold);color:var(--gold)}
+.tag.active{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+
+/* WELCOME SCREEN */
+#welcome{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px;text-align:center;gap:16px;
+}
+.welcome-de{font-family:'Fraunces',serif;font-size:52px;font-weight:300;font-style:italic;line-height:1;color:var(--ink)}
+.welcome-sub{font-size:12px;color:var(--muted);max-width:400px;line-height:1.8;letter-spacing:0.3px}
+.welcome-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px;max-width:580px;width:100%}
+.welcome-card{
+  border:1px solid var(--border);border-radius:4px;padding:14px 10px;
+  text-align:center;background:var(--surface);cursor:pointer;transition:all 0.15s;
+}
+.welcome-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,0.1)}
+.wc-icon{font-size:22px;margin-bottom:6px}
+.wc-label{font-family:'Syne',sans-serif;font-weight:700;font-size:11px;color:var(--ink);letter-spacing:0.5px}
+.wc-desc{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* READING */
+.reading-text{
+  font-size:13px;line-height:2;padding:16px;
+  background:var(--warm);border:1px solid var(--border);border-radius:4px;
+  margin-bottom:14px;
+}
+.reading-text .de-word{
+  border-bottom:1px dashed var(--gold);cursor:help;color:var(--blue);
+}
+
+/* RESPONSIVE FIX */
+@media(max-width:768px){
+  #app{grid-template-columns:1fr}
+  #sidebar{display:none}
+}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="logo">
+    <span class="logo-flag">🇩🇪</span>
+    Deutsch <em>A1</em> — Exam Prep
+  </div>
+  <div class="exam-badge">Goethe-Zertifikat</div>
+  <div class="progress-wrap">
+    <span class="progress-label">PROGRESS</span>
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar" style="width:0%"></div></div>
+    <span class="progress-pct" id="progress-pct">0%</span>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sidebar-head">Study Topics</div>
+  <div class="nav-scroll">
+
+    <div class="nav-section-label">📋 Overview</div>
+    <div class="nav-item active" data-section="welcome" onclick="navigate(this,'welcome')">
+      <span class="nav-icon">🏠</span> Start Here
+    </div>
+    <div class="nav-item" data-section="exam-info" onclick="navigate(this,'exam-info')">
+      <span class="nav-icon">📄</span> Exam Structure
+    </div>
+    <div class="nav-item" data-section="ai-tutor" onclick="navigate(this,'ai-tutor')">
+      <span class="nav-icon">🤖</span> AI Tutor Chat
+    </div>
+
+    <div class="nav-section-label">📚 Vocabulary</div>
+    <div class="nav-item" data-section="vocab-greetings" onclick="navigate(this,'vocab-greetings')">
+      <span class="nav-icon">👋</span> Greetings & Intro
+    </div>
+    <div class="nav-item" data-section="vocab-numbers" onclick="navigate(this,'vocab-numbers')">
+      <span class="nav-icon">🔢</span> Numbers & Dates
+    </div>
+    <div class="nav-item" data-section="vocab-family" onclick="navigate(this,'vocab-family')">
+      <span class="nav-icon">👨‍👩‍👧</span> Family
+    </div>
+    <div class="nav-item" data-section="vocab-food" onclick="navigate(this,'vocab-food')">
+      <span class="nav-icon">🍽️</span> Food & Drink
+    </div>
+    <div class="nav-item" data-section="vocab-home" onclick="navigate(this,'vocab-home')">
+      <span class="nav-icon">🏠</span> Home & Furniture
+    </div>
+    <div class="nav-item" data-section="vocab-transport" onclick="navigate(this,'vocab-transport')">
+      <span class="nav-icon">🚌</span> Transport
+    </div>
+    <div class="nav-item" data-section="vocab-shopping" onclick="navigate(this,'vocab-shopping')">
+      <span class="nav-icon">🛒</span> Shopping
+    </div>
+    <div class="nav-item" data-section="vocab-health" onclick="navigate(this,'vocab-health')">
+      <span class="nav-icon">🏥</span> Health & Body
+    </div>
+    <div class="nav-item" data-section="vocab-work" onclick="navigate(this,'vocab-work')">
+      <span class="nav-icon">💼</span> Work & Jobs
+    </div>
+    <div class="nav-item" data-section="vocab-hobbies" onclick="navigate(this,'vocab-hobbies')">
+      <span class="nav-icon">⚽</span> Hobbies & Time
+    </div>
+    <div class="nav-item" data-section="vocab-weather" onclick="navigate(this,'vocab-weather')">
+      <span class="nav-icon">☀️</span> Weather & Nature
+    </div>
+
+    <div class="nav-section-label">📐 Grammar</div>
+    <div class="nav-item" data-section="gram-articles" onclick="navigate(this,'gram-articles')">
+      <span class="nav-icon">🔤</span> Articles (der/die/das)
+    </div>
+    <div class="nav-item" data-section="gram-verbs" onclick="navigate(this,'gram-verbs')">
+      <span class="nav-icon">⚡</span> Verb Conjugation
+    </div>
+    <div class="nav-item" data-section="gram-cases" onclick="navigate(this,'gram-cases')">
+      <span class="nav-icon">📌</span> Cases (Nom/Acc/Dat)
+    </div>
+    <div class="nav-item" data-section="gram-pronouns" onclick="navigate(this,'gram-pronouns')">
+      <span class="nav-icon">👤</span> Pronouns
+    </div>
+    <div class="nav-item" data-section="gram-negation" onclick="navigate(this,'gram-negation')">
+      <span class="nav-icon">❌</span> Negation
+    </div>
+    <div class="nav-item" data-section="gram-modals" onclick="navigate(this,'gram-modals')">
+      <span class="nav-icon">🎯</span> Modal Verbs
+    </div>
+    <div class="nav-item" data-section="gram-wordorder" onclick="navigate(this,'gram-wordorder')">
+      <span class="nav-icon">↔️</span> Word Order
+    </div>
+    <div class="nav-item" data-section="gram-prepositions" onclick="navigate(this,'gram-prepositions')">
+      <span class="nav-icon">📍</span> Prepositions
+    </div>
+    <div class="nav-item" data-section="gram-plural" onclick="navigate(this,'gram-plural')">
+      <span class="nav-icon">✳️</span> Plural Forms
+    </div>
+
+    <div class="nav-section-label">🎯 Exam Skills</div>
+    <div class="nav-item" data-section="skill-hoeren" onclick="navigate(this,'skill-hoeren')">
+      <span class="nav-icon">🎧</span> Hören (Listening)
+    </div>
+    <div class="nav-item" data-section="skill-lesen" onclick="navigate(this,'skill-lesen')">
+      <span class="nav-icon">📖</span> Lesen (Reading)
+    </div>
+    <div class="nav-item" data-section="skill-schreiben" onclick="navigate(this,'skill-schreiben')">
+      <span class="nav-icon">✍️</span> Schreiben (Writing)
+    </div>
+    <div class="nav-item" data-section="skill-sprechen" onclick="navigate(this,'skill-sprechen')">
+      <span class="nav-icon">🗣️</span> Sprechen (Speaking)
+    </div>
+
+    <div class="nav-section-label">🧪 Practice</div>
+    <div class="nav-item" data-section="flashcards" onclick="navigate(this,'flashcards')">
+      <span class="nav-icon">🃏</span> Flashcards
+    </div>
+    <div class="nav-item" data-section="quiz" onclick="navigate(this,'quiz')">
+      <span class="nav-icon">❓</span> Quiz Mode
+    </div>
+    <div class="nav-item" data-section="mock-exam" onclick="navigate(this,'mock-exam')">
+      <span class="nav-icon">🏆</span> Mock Exam
+    </div>
+  </div>
+
+  <div class="streak-box">
+    <div>
+      <div class="streak-label">STUDY STREAK</div>
+      <div class="streak-val" id="streak-val">1 day 🔥</div>
+    </div>
+    <div style="font-size:11px;color:#666;text-align:right">
+      <div id="topics-done">0 topics</div>
+      <div style="color:#555">completed</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="topic-header">
+    <div>
+      <div class="topic-title" id="topic-title">Willkommen — Welcome</div>
+      <div class="topic-sub" id="topic-sub">Goethe-Zertifikat A1 Complete Preparation</div>
+    </div>
+    <div class="mode-tabs" id="mode-tabs"></div>
+  </div>
+
+  <div id="content"></div>
+
+  <!-- AI TUTOR INPUT (only shows in ai-tutor section) -->
+  <div class="chat-input-wrap hidden" id="chat-input-wrap">
+    <textarea class="chat-input" id="chat-input" placeholder="Ask in English or German… e.g. 'Explain the dative case' or 'Give me a quiz'" rows="1"></textarea>
+    <button class="send-btn" id="send-btn" onclick="sendMessage()">Senden →</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const API_URL = "https://api.anthropic.com/v1/messages";
+
+const VOCAB = {
+  greetings:[
+    {de:"Hallo",en:"Hello",ex:"Hallo, wie geht's?"},
+    {de:"Guten Morgen",en:"Good morning",ex:"Guten Morgen, Herr Schmidt!"},
+    {de:"Guten Tag",en:"Good day",ex:"Guten Tag! Wie heißen Sie?"},
+    {de:"Guten Abend",en:"Good evening",ex:"Guten Abend, Frau Müller."},
+    {de:"Auf Wiedersehen",en:"Goodbye (formal)",ex:"Auf Wiedersehen!"},
+    {de:"Tschüss",en:"Bye (informal)",ex:"Tschüss, bis morgen!"},
+    {de:"Bitte",en:"Please / You're welcome",ex:"Ein Kaffee, bitte."},
+    {de:"Danke",en:"Thank you",ex:"Danke schön!"},
+    {de:"Entschuldigung",en:"Excuse me / Sorry",ex:"Entschuldigung, wo ist der Bahnhof?"},
+    {de:"Wie heißen Sie?",en:"What is your name? (formal)",ex:"Ich heiße Anna."},
+    {de:"Ich heiße...",en:"My name is...",ex:"Ich heiße Thomas."},
+    {de:"Woher kommen Sie?",en:"Where are you from?",ex:"Ich komme aus Kenia."},
+    {de:"Wie geht es Ihnen?",en:"How are you? (formal)",ex:"Gut, danke!"},
+    {de:"Es geht mir gut",en:"I am fine",ex:"Es geht mir gut, und Ihnen?"},
+    {de:"Freut mich",en:"Nice to meet you",ex:"Freut mich, Sie kennenzulernen."},
+  ],
+  numbers:[
+    {de:"null",en:"0",ex:"null Euro"},
+    {de:"eins / ein",en:"1",ex:"ein Kind"},
+    {de:"zwei",en:"2",ex:"zwei Bücher"},
+    {de:"drei",en:"3",ex:"drei Tage"},
+    {de:"vier",en:"4",ex:"vier Stühle"},
+    {de:"fünf",en:"5",ex:"fünf Minuten"},
+    {de:"sechs",en:"6",ex:"sechs Uhr"},
+    {de:"sieben",en:"7",ex:"sieben Tage"},
+    {de:"acht",en:"8",ex:"acht Stunden"},
+    {de:"neun",en:"9",ex:"neun Euro"},
+    {de:"zehn",en:"10",ex:"zehn Personen"},
+    {de:"zwanzig",en:"20",ex:"zwanzig Jahre"},
+    {de:"dreißig",en:"30",ex:"dreißig Minuten"},
+    {de:"hundert",en:"100",ex:"hundert Euro"},
+    {de:"Montag",en:"Monday",ex:"Am Montag arbeite ich."},
+    {de:"Dienstag",en:"Tuesday",ex:"Der Kurs ist am Dienstag."},
+    {de:"Mittwoch",en:"Wednesday",ex:"Mittwoch ist Markt."},
+    {de:"Januar",en:"January",ex:"Im Januar ist es kalt."},
+    {de:"Wie viel Uhr ist es?",en:"What time is it?",ex:"Es ist drei Uhr."},
+  ],
+  family:[
+    {de:"die Familie",en:"family",ex:"Meine Familie ist groß."},
+    {de:"der Vater",en:"father",ex:"Mein Vater heißt Klaus."},
+    {de:"die Mutter",en:"mother",ex:"Meine Mutter kommt aus Berlin."},
+    {de:"der Sohn",en:"son",ex:"Ich habe einen Sohn."},
+    {de:"die Tochter",en:"daughter",ex:"Sie hat zwei Töchter."},
+    {de:"der Bruder",en:"brother",ex:"Mein Bruder ist Student."},
+    {de:"die Schwester",en:"sister",ex:"Ich habe eine Schwester."},
+    {de:"der Mann",en:"husband / man",ex:"Mein Mann arbeitet hier."},
+    {de:"die Frau",en:"wife / woman",ex:"Meine Frau ist Ärztin."},
+    {de:"die Eltern",en:"parents",ex:"Meine Eltern wohnen in Nairobi."},
+    {de:"die Großeltern",en:"grandparents",ex:"Die Großeltern sind alt."},
+    {de:"das Kind",en:"child",ex:"Das Kind spielt gern."},
+    {de:"der Freund",en:"friend / boyfriend",ex:"Mein Freund kommt aus Kenya."},
+    {de:"die Freundin",en:"friend / girlfriend",ex:"Meine Freundin heißt Sara."},
+  ],
+  food:[
+    {de:"das Brot",en:"bread",ex:"Ich esse Brot zum Frühstück."},
+    {de:"der Kaffee",en:"coffee",ex:"Einen Kaffee, bitte."},
+    {de:"das Wasser",en:"water",ex:"Ein Glas Wasser, bitte."},
+    {de:"das Fleisch",en:"meat",ex:"Ich esse kein Fleisch."},
+    {de:"das Gemüse",en:"vegetables",ex:"Das Gemüse ist frisch."},
+    {de:"der Apfel",en:"apple",ex:"Ich mag Äpfel."},
+    {de:"die Milch",en:"milk",ex:"Ich trinke Milch."},
+    {de:"das Ei",en:"egg",ex:"Zwei Eier, bitte."},
+    {de:"der Käse",en:"cheese",ex:"Der Käse ist lecker."},
+    {de:"das Bier",en:"beer",ex:"Ein Bier, bitte."},
+    {de:"das Mittagessen",en:"lunch",ex:"Das Mittagessen ist um 12 Uhr."},
+    {de:"das Frühstück",en:"breakfast",ex:"Frühstück um sieben Uhr."},
+    {de:"das Abendessen",en:"dinner",ex:"Abendessen mit der Familie."},
+    {de:"lecker",en:"delicious",ex:"Das ist sehr lecker!"},
+    {de:"ich hätte gern",en:"I would like",ex:"Ich hätte gern eine Suppe."},
+  ],
+  home:[
+    {de:"das Haus",en:"house",ex:"Ich wohne in einem Haus."},
+    {de:"die Wohnung",en:"apartment",ex:"Die Wohnung hat drei Zimmer."},
+    {de:"das Zimmer",en:"room",ex:"Das Zimmer ist groß."},
+    {de:"die Küche",en:"kitchen",ex:"Die Küche ist modern."},
+    {de:"das Badezimmer",en:"bathroom",ex:"Das Badezimmer ist klein."},
+    {de:"das Schlafzimmer",en:"bedroom",ex:"Das Schlafzimmer hat ein Fenster."},
+    {de:"das Wohnzimmer",en:"living room",ex:"Im Wohnzimmer steht ein Sofa."},
+    {de:"der Tisch",en:"table",ex:"Der Tisch ist aus Holz."},
+    {de:"der Stuhl",en:"chair",ex:"Der Stuhl ist bequem."},
+    {de:"das Bett",en:"bed",ex:"Das Bett ist groß."},
+    {de:"der Schrank",en:"wardrobe",ex:"Im Schrank hängen Kleider."},
+    {de:"die Adresse",en:"address",ex:"Was ist Ihre Adresse?"},
+    {de:"die Straße",en:"street",ex:"Die Straße heißt Hauptstraße."},
+    {de:"mieten",en:"to rent",ex:"Ich miete eine Wohnung."},
+  ],
+  transport:[
+    {de:"der Bus",en:"bus",ex:"Ich fahre mit dem Bus."},
+    {de:"der Zug",en:"train",ex:"Der Zug fährt um 9 Uhr."},
+    {de:"das Auto",en:"car",ex:"Mein Auto ist rot."},
+    {de:"das Fahrrad",en:"bicycle",ex:"Ich fahre Fahrrad."},
+    {de:"das Flugzeug",en:"airplane",ex:"Ich fliege mit dem Flugzeug."},
+    {de:"der Bahnhof",en:"train station",ex:"Der Bahnhof ist in der Mitte."},
+    {de:"die U-Bahn",en:"subway",ex:"Die U-Bahn kommt um 8 Uhr."},
+    {de:"die Straßenbahn",en:"tram",ex:"Die Straßenbahn hält hier."},
+    {de:"fahren",en:"to drive/go",ex:"Ich fahre nach Berlin."},
+    {de:"die Fahrkarte",en:"ticket",ex:"Eine Fahrkarte, bitte."},
+    {de:"links",en:"left",ex:"Bitte links abbiegen."},
+    {de:"rechts",en:"right",ex:"Das ist rechts."},
+    {de:"geradeaus",en:"straight ahead",ex:"Gehen Sie geradeaus."},
+    {de:"weit",en:"far",ex:"Ist das weit?"},
+  ],
+  shopping:[
+    {de:"der Supermarkt",en:"supermarket",ex:"Ich gehe in den Supermarkt."},
+    {de:"der Markt",en:"market",ex:"Der Markt ist samstags."},
+    {de:"die Kasse",en:"checkout",ex:"Bezahlen Sie bitte an der Kasse."},
+    {de:"der Preis",en:"price",ex:"Was kostet das?"},
+    {de:"teuer",en:"expensive",ex:"Das ist zu teuer."},
+    {de:"billig / günstig",en:"cheap / affordable",ex:"Das ist günstig!"},
+    {de:"kaufen",en:"to buy",ex:"Ich kaufe ein Buch."},
+    {de:"bezahlen",en:"to pay",ex:"Kann ich mit Karte bezahlen?"},
+    {de:"kosten",en:"to cost",ex:"Das kostet fünf Euro."},
+    {de:"das Geld",en:"money",ex:"Haben Sie Kleingeld?"},
+    {de:"der Euro",en:"euro",ex:"Das macht zehn Euro."},
+    {de:"die Kleidung",en:"clothing",ex:"Ich kaufe neue Kleidung."},
+    {de:"die Größe",en:"size",ex:"Welche Größe haben Sie?"},
+    {de:"Ich suche...",en:"I am looking for...",ex:"Ich suche einen Pullover."},
+  ],
+  health:[
+    {de:"der Arzt",en:"doctor",ex:"Ich gehe zum Arzt."},
+    {de:"das Krankenhaus",en:"hospital",ex:"Das Krankenhaus ist groß."},
+    {de:"die Apotheke",en:"pharmacy",ex:"Die Apotheke ist geöffnet."},
+    {de:"krank",en:"sick",ex:"Ich bin krank."},
+    {de:"der Kopf",en:"head",ex:"Mein Kopf tut weh."},
+    {de:"der Bauch",en:"stomach",ex:"Ich habe Bauchschmerzen."},
+    {de:"das Medikament",en:"medicine",ex:"Ich nehme Medikamente."},
+    {de:"die Tablette",en:"tablet/pill",ex:"Dreimal täglich eine Tablette."},
+    {de:"wehtun",en:"to hurt",ex:"Mein Bein tut weh."},
+    {de:"der Termin",en:"appointment",ex:"Ich habe einen Termin."},
+    {de:"die Allergie",en:"allergy",ex:"Ich habe eine Allergie."},
+    {de:"gesund",en:"healthy",ex:"Ich bin wieder gesund."},
+    {de:"die Erkältung",en:"cold",ex:"Ich habe eine Erkältung."},
+    {de:"das Fieber",en:"fever",ex:"Ich habe Fieber."},
+  ],
+  work:[
+    {de:"der Beruf",en:"profession",ex:"Was ist Ihr Beruf?"},
+    {de:"der Arzt / die Ärztin",en:"doctor",ex:"Sie ist Ärztin."},
+    {de:"der Lehrer / die Lehrerin",en:"teacher",ex:"Er ist Lehrer."},
+    {de:"der Ingenieur",en:"engineer",ex:"Er ist Ingenieur."},
+    {de:"der Student",en:"student",ex:"Ich bin Student."},
+    {de:"das Büro",en:"office",ex:"Ich arbeite im Büro."},
+    {de:"die Firma",en:"company",ex:"Die Firma ist in Berlin."},
+    {de:"arbeiten",en:"to work",ex:"Ich arbeite viel."},
+    {de:"das Gehalt",en:"salary",ex:"Das Gehalt ist gut."},
+    {de:"die Besprechung",en:"meeting",ex:"Ich habe eine Besprechung."},
+    {de:"der Chef",en:"boss",ex:"Mein Chef ist nett."},
+    {de:"Vollzeit",en:"full time",ex:"Ich arbeite Vollzeit."},
+    {de:"Teilzeit",en:"part time",ex:"Sie arbeitet Teilzeit."},
+  ],
+  hobbies:[
+    {de:"das Hobby",en:"hobby",ex:"Was ist Ihr Hobby?"},
+    {de:"lesen",en:"to read",ex:"Ich lese gern Bücher."},
+    {de:"Musik hören",en:"to listen to music",ex:"Ich höre gern Musik."},
+    {de:"Sport treiben",en:"to do sports",ex:"Ich treibe Sport."},
+    {de:"schwimmen",en:"to swim",ex:"Ich schwimme gern."},
+    {de:"kochen",en:"to cook",ex:"Ich koche gern."},
+    {de:"tanzen",en:"to dance",ex:"Sie tanzt sehr gut."},
+    {de:"reisen",en:"to travel",ex:"Ich reise gern."},
+    {de:"das Kino",en:"cinema",ex:"Ich gehe ins Kino."},
+    {de:"das Konzert",en:"concert",ex:"Das Konzert war super!"},
+    {de:"spielen",en:"to play",ex:"Ich spiele Gitarre."},
+    {de:"das Wochenende",en:"weekend",ex:"Am Wochenende schlafe ich lang."},
+    {de:"gern",en:"gladly / like to",ex:"Ich esse gern Pizza."},
+  ],
+  weather:[
+    {de:"das Wetter",en:"weather",ex:"Das Wetter ist schön."},
+    {de:"die Sonne",en:"sun",ex:"Die Sonne scheint."},
+    {de:"der Regen",en:"rain",ex:"Es regnet heute."},
+    {de:"der Schnee",en:"snow",ex:"Im Winter gibt es Schnee."},
+    {de:"kalt",en:"cold",ex:"Es ist sehr kalt."},
+    {de:"warm",en:"warm",ex:"Heute ist es warm."},
+    {de:"heiß",en:"hot",ex:"Im Sommer ist es heiß."},
+    {de:"bewölkt",en:"cloudy",ex:"Es ist bewölkt."},
+    {de:"der Wind",en:"wind",ex:"Der Wind ist stark."},
+    {de:"der Frühling",en:"spring",ex:"Im Frühling blühen Blumen."},
+    {de:"der Sommer",en:"summer",ex:"Der Sommer ist heiß."},
+    {de:"der Herbst",en:"autumn",ex:"Im Herbst ist es kühl."},
+    {de:"der Winter",en:"winter",ex:"Der Winter ist kalt."},
+  ]
+};
+
+const GRAMMAR = {
+  articles:{
+    title:"Articles — der, die, das, ein, eine",
+    rules:[
+      {title:"Definite Articles (The)",body:`German has three genders: <code>der</code> (masculine), <code>die</code> (feminine), <code>das</code> (neuter). Every noun has a fixed gender you must memorize.\n\nExamples: <code>der Mann</code> (the man), <code>die Frau</code> (the woman), <code>das Kind</code> (the child)`,note:"Tip: Always learn the article with the noun — der/die/das Buch ✗ → das Buch ✓"},
+      {title:"Indefinite Articles (A/An)",body:`<code>ein</code> → masculine & neuter: <code>ein Mann</code>, <code>ein Kind</code>\n<code>eine</code> → feminine: <code>eine Frau</code>`,note:"Plural has no indefinite article: Kinder (children)"},
+      {title:"Article Changes by Case",body:`Nominative (subject): <code>der/die/das/ein/eine</code>\nAccusative (object): <code>den</code> (masc) changes! <code>den Mann</code>\nDative (with prepositions): <code>dem</code> (masc/neut), <code>der</code> (fem)`,note:"For A1, focus on nominative and accusative."},
+    ],
+    table:{
+      headers:["","Masculine","Feminine","Neuter","Plural"],
+      rows:[
+        ["Nominative (subject)","der / ein","die / eine","das / ein","die / —"],
+        ["Accusative (object)","den / einen","die / eine","das / ein","die / —"],
+      ]
+    }
+  },
+  verbs:{
+    title:"Verb Conjugation",
+    rules:[
+      {title:"Regular Verbs — Present Tense",body:`Stem + endings: <code>-e, -st, -t, -en, -t, -en</code>\n\nExample: <code>wohnen</code> (to live)\nih wohne | du wohnst | er/sie/es wohnt\nwir wohnen | ihr wohnt | sie/Sie wohnen`,note:"Find the stem: remove -en from infinitive → wohn-"},
+      {title:"Irregular Verbs: sein (to be)",body:`ich <code>bin</code> | du <code>bist</code> | er/sie/es <code>ist</code>\nwir <code>sind</code> | ihr <code>seid</code> | sie/Sie <code>sind</code>`,note:"sein is the most important verb — memorize it first!"},
+      {title:"Irregular Verbs: haben (to have)",body:`ich <code>habe</code> | du <code>hast</code> | er/sie/es <code>hat</code>\nwir <code>haben</code> | ihr <code>habt</code> | sie/Sie <code>haben</code>`,note:"haben is used for possession and compound tenses."},
+    ]
+  },
+  cases:{
+    title:"Cases: Nominative, Accusative & Dative",
+    rules:[
+      {title:"Nominative — the Subject",body:`The subject DOES the action.\n<code>Der Mann kauft Brot.</code> (The man buys bread.)\nDer Mann = nominative (he is doing the buying)`,note:"Who or what is performing the action?"},
+      {title:"Accusative — the Direct Object",body:`The direct object RECEIVES the action.\n<code>Der Mann kauft den Brot.</code> → Wait! Brot is neuter → <code>das Brot</code> stays <code>das</code>\nMasculine changes: <code>der → den</code>\n<code>Ich sehe den Mann.</code>`,note:"Only masculine articles change in accusative: der → den, ein → einen"},
+      {title:"Dative — Indirect Object & Prepositions",body:`Used with prepositions: <code>mit, bei, nach, seit, von, zu, aus, gegenüber</code>\n<code>Ich fahre mit dem Bus.</code> (I go by bus.)\n<code>Ich wohne bei meiner Mutter.</code>`,note:"At A1, memorize these dative prepositions as a list."},
+    ]
+  },
+  pronouns:{
+    title:"Personal & Possessive Pronouns",
+    rules:[
+      {title:"Personal Pronouns",body:`ich (I) | du (you, informal) | er (he) | sie (she) | es (it)\nwir (we) | ihr (you all) | sie (they) | Sie (You, formal)\n\n<code>Ich bin Jimmy. Er kommt aus Kenia.</code>`,note:"Sie (formal You) is always capitalized — even mid-sentence."},
+      {title:"Possessive Pronouns",body:`mein/meine (my) | dein/deine (your) | sein/seine (his) | ihr/ihre (her)\nunser/unsere (our) | euer/eure (your pl.) | ihr/ihre (their) | Ihr/Ihre (Your formal)\n\n<code>Mein Name ist Jimmy. Meine Mutter wohnt in Nairobi.</code>`,note:"Possessives follow the same -e rule as ein/eine for feminine nouns."},
+    ]
+  },
+  negation:{
+    title:"Negation: nicht & kein",
+    rules:[
+      {title:"nicht — negates verbs & adjectives",body:`Place <code>nicht</code> at the END of a simple sentence or BEFORE an adjective/adverb:\n<code>Ich komme nicht.</code> (I am not coming.)\n<code>Das ist nicht gut.</code> (That is not good.)`,note:"nicht goes before the infinitive or adjective it negates."},
+      {title:"kein — negates nouns",body:`Use <code>kein/keine</code> instead of <code>ein/eine</code> to negate a noun:\n<code>Ich habe ein Auto.</code> → <code>Ich habe kein Auto.</code>\n<code>Ich habe eine Schwester.</code> → <code>Ich habe keine Schwester.</code>`,note:"kein = not a / no. It follows the same endings as ein/eine."},
+    ]
+  },
+  modals:{
+    title:"Modal Verbs",
+    rules:[
+      {title:"The 6 Modal Verbs",body:`<code>können</code> (can/to be able to)\n<code>wollen</code> (to want to)\n<code>müssen</code> (must/to have to)\n<code>mögen / möchten</code> (to like / would like to)\n<code>sollen</code> (should/to be supposed to)\n<code>dürfen</code> (may/to be allowed to)`,note:"Modals are used with an infinitive at the END of the sentence."},
+      {title:"Modal Verb Structure",body:`MODAL + ... + INFINITIVE (at end)\n<code>Ich kann Deutsch sprechen.</code> (I can speak German.)\n<code>Ich möchte Kaffee trinken.</code> (I would like to drink coffee.)\n<code>Er muss heute arbeiten.</code> (He must work today.)`,note:"möchten is the most polite form — use it in restaurants and shops."},
+    ]
+  },
+  wordorder:{
+    title:"German Word Order (V2 Rule)",
+    rules:[
+      {title:"V2 Rule — Verb in Second Position",body:`The conjugated verb is ALWAYS in position 2.\n<code>Ich wohne in Nairobi.</code> (Subject - Verb - Rest)\n<code>In Nairobi wohne ich.</code> (Place first → verb still 2nd!)`,note:"No matter what starts the sentence, the verb stays in 2nd position."},
+      {title:"Questions",body:`Yes/No questions: Verb FIRST.\n<code>Wohnen Sie in Nairobi?</code> (Do you live in Nairobi?)\n\nQuestion word questions: Question Word + Verb + Subject\n<code>Wo wohnen Sie?</code> (Where do you live?)\n<code>Was essen Sie gern?</code>`,note:"W-questions: Wer, Was, Wo, Wann, Wie, Warum, Woher, Wohin"},
+    ]
+  },
+  prepositions:{
+    title:"Prepositions",
+    rules:[
+      {title:"Accusative Prepositions",body:`<code>durch</code> (through) | <code>für</code> (for) | <code>gegen</code> (against) | <code>ohne</code> (without) | <code>um</code> (around)\n\n<code>Das ist für meinen Vater.</code>\n<code>Ich gehe durch den Park.</code>`,note:"Memory trick: durch-für-gegen-ohne-um"},
+      {title:"Dative Prepositions",body:`<code>aus, bei, mit, nach, seit, von, zu, gegenüber</code>\n\n<code>Ich fahre mit dem Zug.</code>\n<code>Ich komme aus Kenia.</code>\n<code>Er wohnt bei seiner Mutter.</code>`,note:"These ALWAYS take dative — memorize this list!"},
+      {title:"Two-Way Prepositions (location vs. movement)",body:`<code>in, an, auf, über, unter, vor, hinter, neben, zwischen</code>\n\nWhere? (Dative): <code>Das Buch liegt auf dem Tisch.</code>\nWhere to? (Accusative): <code>Ich lege das Buch auf den Tisch.</code>`,note:"At A1 focus on: in, an, auf with dative for location."},
+    ]
+  },
+  plural:{
+    title:"Plural Forms",
+    rules:[
+      {title:"5 Common Plural Patterns",body:`1. No change: <code>der Lehrer → die Lehrer</code>\n2. Add -e: <code>der Tag → die Tage</code>\n3. Add -er: <code>das Kind → die Kinder</code>\n4. Add -en/-n: <code>die Frau → die Frauen</code>\n5. Add -s (foreign words): <code>das Auto → die Autos</code>`,note:"There is no simple rule — learn plurals with the noun!"},
+      {title:"Umlaut Changes",body:`Many masculine/neuter nouns add umlaut (ä/ö/ü):\n<code>der Vater → die Väter</code>\n<code>das Haus → die Häuser</code>\n<code>der Bruder → die Brüder</code>`,note:"In plural, ALL nouns use die as the article."},
+    ]
+  }
+};
+
+const QUIZ_BANK = [
+  {q:"What is the German word for 'Good morning'?",opts:["Guten Abend","Guten Morgen","Auf Wiedersehen","Tschüss"],ans:1,exp:"Guten Morgen = Good morning. Guten Abend = Good evening."},
+  {q:"Which article goes with 'Frau' (woman)?",opts:["der","das","die","ein"],ans:2,exp:"die Frau — Frau is feminine, so it uses die."},
+  {q:"Complete: 'Ich ___ aus Kenia.' (I come from Kenya.)",opts:["bin","habe","komme","gehe"],ans:2,exp:"kommen = to come. Ich komme aus... = I come from..."},
+  {q:"How do you say 'I don't have a car' in German?",opts:["Ich habe kein Auto.","Ich habe nicht Auto.","Ich bin kein Auto.","Ich habe ein Auto nicht."],ans:0,exp:"Use kein/keine to negate nouns. kein Auto (neuter noun, no article change)."},
+  {q:"Which is correct: 'I can speak German'?",opts:["Ich kann Deutsch sprechen.","Ich kann sprechen Deutsch.","Ich sprechen kann Deutsch.","Deutsch ich kann sprechen."],ans:0,exp:"Modal verbs send the infinitive to the END of the sentence."},
+  {q:"What does 'Wie viel Uhr ist es?' mean?",opts:["What day is it?","What is your name?","What time is it?","How old are you?"],ans:2,exp:"Wie viel Uhr ist es? = What time is it? Es ist drei Uhr = It is 3 o'clock."},
+  {q:"The verb 'sein' (to be) — which is correct for 'er'?",opts:["er bin","er bist","er ist","er sind"],ans:2,exp:"sein: ich bin, du bist, er/sie/es IST, wir sind, ihr seid, sie/Sie sind."},
+  {q:"Which preposition ALWAYS takes dative?",opts:["für","durch","mit","gegen"],ans:2,exp:"mit always takes dative. durch, für, gegen take accusative."},
+  {q:"How do you say 'I am looking for a room'?",opts:["Ich suche ein Zimmer.","Ich suche einen Zimmer.","Ich suche eine Zimmer.","Ich suche das Zimmer."],ans:0,exp:"Zimmer is neuter (das Zimmer). In accusative, neuter doesn't change: ein Zimmer."},
+  {q:"Which sentence uses the V2 rule correctly?",opts:["Morgen ich komme.","Ich komme morgen.","Ich morgen komme.","Komme ich morgen."],ans:1,exp:"V2 rule: verb stays in 2nd position. Ich (1) komme (2) morgen (3). ✓"},
+  {q:"What does 'Ich möchte einen Kaffee' mean?",opts:["I have a coffee.","I would like a coffee.","I drink a coffee.","I buy a coffee."],ans:1,exp:"möchten = would like to. Kaffee is masculine, accusative → einen Kaffee."},
+  {q:"Plural of 'das Kind' (child)?",opts:["die Kindern","die Kinder","die Kinds","die Kinde"],ans:1,exp:"Kind → Kinder (adds -er). All plurals use 'die'."},
+  {q:"'Entschuldigung' means:",opts:["Thank you","Please","Excuse me / Sorry","You're welcome"],ans:2,exp:"Entschuldigung = Excuse me / Sorry. Danke = Thank you. Bitte = Please."},
+  {q:"'Der Mann kauft ___ Buch.' (The man buys the book.)",opts:["der","die","das","dem"],ans:2,exp:"Buch is neuter. In accusative, neuter keeps 'das'. Der Mann kauft das Buch."},
+  {q:"How do you ask 'Where do you come from?' (formal)?",opts:["Woher kommen Sie?","Wo kommen Sie?","Wohin kommen Sie?","Wer kommen Sie?"],ans:0,exp:"Woher = from where. Wohin = to where. Wo = where (location)."},
+];
+
+const FLASHCARD_DECKS = {
+  greetings: VOCAB.greetings,
+  numbers: VOCAB.numbers,
+  family: VOCAB.family,
+  food: VOCAB.food,
+  home: VOCAB.home,
+  transport: VOCAB.transport,
+  shopping: VOCAB.shopping,
+  health: VOCAB.health,
+  work: VOCAB.work,
+  hobbies: VOCAB.hobbies,
+  weather: VOCAB.weather,
+  mixed: [...VOCAB.greetings,...VOCAB.food,...VOCAB.numbers,...VOCAB.family].sort(()=>Math.random()-0.5)
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let currentSection = 'welcome';
+let chatHistory = [];
+let quizState = {idx:0, score:0, answered:false};
+let fcState = {deck:'mixed', idx:0, flipped:false};
+let completedSections = new Set();
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function navigate(el, section){
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  currentSection = section;
+  renderSection(section);
+}
+
+function renderSection(section){
+  const content = document.getElementById('content');
+  const header = document.getElementById('topic-header');
+  const chatWrap = document.getElementById('chat-input-wrap');
+  const modeTabs = document.getElementById('mode-tabs');
+
+  chatWrap.classList.add('hidden');
+  content.style.display = 'flex';
+  modeTabs.innerHTML = '';
+
+  const titles = {
+    'welcome':'Willkommen — Welcome','exam-info':'Exam Structure','ai-tutor':'AI Tutor',
+    'vocab-greetings':'Grüße & Vorstellung','vocab-numbers':'Zahlen & Datum',
+    'vocab-family':'Familie','vocab-food':'Essen & Trinken','vocab-home':'Haus & Wohnung',
+    'vocab-transport':'Transport & Verkehr','vocab-shopping':'Einkaufen',
+    'vocab-health':'Gesundheit & Körper','vocab-work':'Arbeit & Berufe',
+    'vocab-hobbies':'Hobbys & Freizeit','vocab-weather':'Wetter & Jahreszeiten',
+    'gram-articles':'Artikel: der/die/das','gram-verbs':'Verbkonjugation',
+    'gram-cases':'Fälle: Kasus','gram-pronouns':'Pronomen','gram-negation':'Verneinung',
+    'gram-modals':'Modalverben','gram-wordorder':'Satzstellung','gram-prepositions':'Präpositionen',
+    'gram-plural':'Plural','skill-hoeren':'Hören (Listening)','skill-lesen':'Lesen (Reading)',
+    'skill-schreiben':'Schreiben (Writing)','skill-sprechen':'Sprechen (Speaking)',
+    'flashcards':'Lernkarten — Flashcards','quiz':'Quiz Mode','mock-exam':'Mock Exam'
+  };
+
+  document.getElementById('topic-title').textContent = titles[section] || section;
+
+  if(section === 'welcome') { renderWelcome(); return; }
+  if(section === 'exam-info') { renderExamInfo(); return; }
+  if(section === 'ai-tutor') { renderAITutor(); return; }
+  if(section === 'flashcards') { renderFlashcards(); return; }
+  if(section === 'quiz') { renderQuiz(); return; }
+  if(section === 'mock-exam') { renderMockExam(); return; }
+  if(section.startsWith('vocab-')) { renderVocab(section); return; }
+  if(section.startsWith('gram-')) { renderGrammar(section); return; }
+  if(section.startsWith('skill-')) { renderSkill(section); return; }
+}
+
+// ============================================================
+// WELCOME
+// ============================================================
+function renderWelcome(){
+  const c = document.getElementById('content');
+  c.innerHTML = `
+  <div id="welcome">
+    <div class="welcome-de">Guten Tag,<br><em>Jimmy!</em></div>
+    <div class="welcome-sub">
+      Your complete Goethe-Zertifikat A1 preparation.<br>
+      Vocabulary · Grammar · All 4 Exam Skills · AI Tutor · Flashcards · Quiz.
+    </div>
+    <div class="welcome-grid">
+      <div class="welcome-card" onclick="navigateTo('vocab-greetings')">
+        <div class="wc-icon">📚</div>
+        <div class="wc-label">VOCABULARY</div>
+        <div class="wc-desc">11 topic areas · 180+ words</div>
+      </div>
+      <div class="welcome-card" onclick="navigateTo('gram-articles')">
+        <div class="wc-icon">📐</div>
+        <div class="wc-label">GRAMMAR</div>
+        <div class="wc-desc">Articles · Verbs · Cases · More</div>
+      </div>
+      <div class="welcome-card" onclick="navigateTo('flashcards')">
+        <div class="wc-icon">🃏</div>
+        <div class="wc-label">FLASHCARDS</div>
+        <div class="wc-desc">Spaced repetition practice</div>
+      </div>
+      <div class="welcome-card" onclick="navigateTo('ai-tutor')">
+        <div class="wc-icon">🤖</div>
+        <div class="wc-label">AI TUTOR</div>
+        <div class="wc-desc">Ask anything · Get instant help</div>
+      </div>
+      <div class="welcome-card" onclick="navigateTo('skill-hoeren')">
+        <div class="wc-icon">🎧</div>
+        <div class="wc-label">HÖREN</div>
+        <div class="wc-desc">Listening exam tips & practice</div>
+      </div>
+      <div class="welcome-card" onclick="navigateTo('skill-lesen')">
+        <div class="wc-icon">📖</div>
+        <div class="wc-label">LESEN</div>
+        <div class="wc-desc">Reading strategies & texts</div>
+      </div>
+      <div class="welcome-card" onclick="navigateTo('skill-schreiben')">
+        <div class="wc-icon">✍️</div>
+        <div class="wc-label">SCHREIBEN</div>
+        <div class="wc-desc">Writing tasks with AI feedback</div>
+      </div>
+      <div class="welcome-card" onclick="navigateTo('quiz')">
+        <div class="wc-icon">❓</div>
+        <div class="wc-label">QUIZ</div>
+        <div class="wc-desc">Test your knowledge · Score</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px">
+      Goethe-Zertifikat A1 · 4 parts · 60 min total · 60% to pass each section
+    </div>
+  </div>`;
+}
+
+function navigateTo(section){
+  const navItem = document.querySelector(`[data-section="${section}"]`);
+  if(navItem) navigate(navItem, section);
+  else renderSection(section);
+}
+
+// ============================================================
+// EXAM INFO
+// ============================================================
+function renderExamInfo(){
+  const c = document.getElementById('content');
+  document.getElementById('topic-sub').textContent = 'What you need to know about the Goethe-Zertifikat A1';
+  c.innerHTML = `
+  <div class="card">
+    <div class="card-title">📋 Exam Overview</div>
+    <div class="grammar-rule">
+      <div class="rule-title">Total Duration: ~60 minutes</div>
+      <div class="rule-body">Pass mark: <code>60%</code> in each module · 4 modules · Certificate: A1 CEFR level</div>
+    </div>
+  </div>
+  <div class="exam-grid">
+    <div class="exam-part">
+      <div class="exam-part-flag">🎧</div>
+      <div class="exam-part-name">Hören — Listening</div>
+      <div class="exam-part-desc">3 parts: phone calls, public announcements, short conversations. Choose from multiple choice, true/false.</div>
+      <div class="exam-part-info">
+        <div class="exam-info-item"><span class="exam-info-val">~20 min</span><span>Duration</span></div>
+        <div class="exam-info-item"><span class="exam-info-val">15 pts</span><span>Max score</span></div>
+        <div class="exam-info-item"><span class="exam-info-val">9 pts</span><span>To pass</span></div>
+      </div>
+    </div>
+    <div class="exam-part">
+      <div class="exam-part-flag">📖</div>
+      <div class="exam-part-name">Lesen — Reading</div>
+      <div class="exam-part-desc">3 parts: notices, ads, short messages, forms. Match, choose correct meaning, fill in info.</div>
+      <div class="exam-part-info">
+        <div class="exam-info-item"><span class="exam-info-val">~25 min</span><span>Duration</span></div>
+        <div class="exam-info-item"><span class="exam-info-val">15 pts</span><span>Max score</span></div>
+        <div class="exam-info-item"><span class="exam-info-val">9 pts</span><span>To pass</span></div>
+      </div>
+    </div>
+    <div class="exam-part">
+      <div class="exam-part-flag">✍️</div>
+      <div class="exam-part-name">Schreiben — Writing</div>
+      <div class="exam-part-desc">2 parts: fill in a form with personal info (name, age, address etc.) + write a short message (20–30 words).</div>
+      <div class="exam-part-info">
+        <div class="exam-info-item"><span class="exam-info-val">~20 min</span><span>Duration</span></div>
+        <div class="exam-info-item"><span class="exam-info-val">15 pts</span><span>Max score</span></div>
+        <div class="exam-info-item"><span class="exam-info-val">9 pts</span><span>To pass</span></div>
+      </div>
+    </div>
+    <div class="exam-part">
+      <div class="exam-part-flag">🗣️</div>
+      <div class="exam-part-name">Sprechen — Speaking</div>
+      <div class="exam-part-desc">3 parts: introduce yourself, ask and answer simple questions using prompt cards, spell something.</div>
+      <div class="exam-part-info">
+        <div class="exam-info-item"><span class="exam-info-val">~15 min</span><span>Duration</span></div>
+        <div class="exam-info-item"><span class="exam-info-val">15 pts</span><span>Max score</span></div>
+        <div class="exam-info-item"><span class="exam-info-val">9 pts</span><span>To pass</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">✅ Key Topics — A1 Vocabulary Areas</div>
+    <div class="tags">
+      ${['Personal info','Family','Daily routine','Food & drink','Shopping','Housing','Transport','Health','Work','Hobbies','Weather','Numbers & time','Dates','Countries & languages','Colors & clothes'].map(t=>`<span class="tag">${t}</span>`).join('')}
+    </div>
+    <div class="rule-note">All vocabulary topics are covered in this app. Use the sidebar to navigate each topic.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">🧠 Essential Grammar for A1</div>
+    <div class="tags">
+      ${['Articles der/die/das','Verb conjugation','sein & haben','Modal verbs','Nominative & Accusative','Negation nicht/kein','V2 word order','Dative prepositions','Plural forms','Possessive pronouns','W-questions','Yes/No questions'].map(t=>`<span class="tag">${t}</span>`).join('')}
+    </div>
+  </div>`;
+  markComplete('exam-info');
+}
+
+// ============================================================
+// VOCAB
+// ============================================================
+function renderVocab(section){
+  const key = section.replace('vocab-','');
+  const words = VOCAB[key] || [];
+  const c = document.getElementById('content');
+  document.getElementById('topic-sub').textContent = `${words.length} words · Click row to practice`;
+
+  // mode tabs
+  renderModeTabs(['Table','Flashcards','AI Practice'], 0, (m)=>{
+    if(m==='Flashcards'){
+      fcState.deck = key;
+      fcState.idx = 0;
+      fcState.flipped = false;
+      navigateTo('flashcards');
+    } else if(m==='AI Practice'){
+      startAIPractice(key);
+    }
+  });
+
+  c.innerHTML = `
+  <div class="card">
+    <div class="card-title">📋 Vocabulary List</div>
+    <div class="vocab-grid">
+      <div class="vocab-cell header">Deutsch</div>
+      <div class="vocab-cell header">English</div>
+      <div class="vocab-cell header">Example Sentence</div>
+      ${words.map(w=>`
+        <div class="vocab-cell"><span class="vocab-de">${w.de}</span></div>
+        <div class="vocab-cell"><span class="vocab-en">${w.en}</span></div>
+        <div class="vocab-cell"><span class="vocab-ex">${w.ex}</span></div>
+      `).join('')}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">💡 Quick Practice Tips</div>
+    <div class="grammar-rule">
+      <div class="rule-body">Use the <strong>Flashcard</strong> tab to drill this vocabulary in spaced repetition mode. The AI Tutor can quiz you, correct your sentences, and explain any word in depth.</div>
+      <div class="rule-note">Tip: Say each word out loud as you study it — speaking reinforces memory.</div>
+    </div>
+  </div>`;
+  markComplete(section);
+}
+
+function startAIPractice(topic){
+  const topicName = topic.charAt(0).toUpperCase()+topic.slice(1);
+  chatHistory = [{
+    role:'user',
+    content:`Please quiz me on German A1 vocabulary for the topic: ${topicName}. Give me 5 fill-in-the-blank or translation questions one at a time. Start with the first question.`
+  }];
+  const navItem = document.querySelector('[data-section="ai-tutor"]');
+  navigate(navItem,'ai-tutor');
+  setTimeout(()=>callAI(),300);
+}
+
+// ============================================================
+// GRAMMAR
+// ============================================================
+function renderGrammar(section){
+  const key = section.replace('gram-','');
+  const data = GRAMMAR[key];
+  if(!data){renderSection('welcome');return;}
+  const c = document.getElementById('content');
+  document.getElementById('topic-sub').textContent = 'Grammar rules · Examples · Practice';
+
+  c.innerHTML = `
+  <div class="card">
+    <div class="card-title">📐 ${data.title}</div>
+    ${data.rules.map(r=>`
+      <div class="grammar-rule">
+        <div class="rule-title">${r.title}</div>
+        <div class="rule-body">${formatRule(r.body)}</div>
+        ${r.note?`<div class="rule-note">💡 ${r.note}</div>`:''}
+      </div>
+    `).join('')}
+  </div>
+  ${data.table?renderGramTable(data.table):''}
+  <div class="card">
+    <div class="card-title">🤖 Get Help from AI Tutor</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      ${[`Explain ${data.title} with 5 examples`,`Quiz me on ${data.title}`,`What are common mistakes with ${data.title}?`].map(p=>`
+        <div class="tag" onclick="askAI('${p}')" style="cursor:pointer">${p}</div>
+      `).join('')}
+    </div>
+  </div>`;
+  markComplete(section);
+}
+
+function formatRule(text){
+  return text
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+}
+
+function renderGramTable(table){
+  return `
+  <div class="card">
+    <div class="card-title">📊 Quick Reference Table</div>
+    <table class="conj-table">
+      <thead><tr>${table.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+      <tbody>${table.rows.map(row=>`<tr>${row.map((cell,i)=>`<td class="${i>0?'highlight-cell':''}">${cell}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table>
+  </div>`;
+}
+
+// ============================================================
+// EXAM SKILLS
+// ============================================================
+function renderSkill(section){
+  const c = document.getElementById('content');
+  if(section==='skill-hoeren'){
+    document.getElementById('topic-sub').textContent = 'Listening comprehension strategies · 3 parts · ~20 min';
+    c.innerHTML = `
+    <div class="card">
+      <div class="card-title">🎧 Hören — What to Expect</div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 1 — Short conversations or phone calls</div>
+        <div class="rule-body">You hear 5 short recordings. Choose the correct image or answer (A, B, or C).<br>You hear each recording <strong>twice</strong>.</div>
+        <div class="rule-note">Focus on: numbers, times, names, places</div>
+      </div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 2 — Public announcements or radio</div>
+        <div class="rule-body">You hear 5 short announcements. Mark: richtig (right) or falsch (wrong).</div>
+        <div class="rule-note">Focus on: key nouns, negation words (kein/nicht), time words</div>
+      </div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 3 — Longer dialogue</div>
+        <div class="rule-body">You hear a conversation. Answer 5 multiple-choice questions.</div>
+        <div class="rule-note">Listen for the question words: Wann? Wo? Wer? Was?</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">✅ Key Listening Strategies</div>
+      ${['Read the questions BEFORE the audio starts','Listen for keywords — you do not need to understand every word','Numbers and times are very common — practice counting in German','Pay attention to NOT / NICHT / KEIN — they reverse the meaning','Use the second listening to confirm your answers'].map(s=>`
+        <div class="grammar-rule" style="margin-bottom:6px">
+          <div class="rule-body">✓ ${s}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="card">
+      <div class="card-title">🔊 Key Words to Recognize</div>
+      <div class="tags">
+        ${['Ja / Nein','Kein / Nicht','Links / Rechts','Uhr (o\'clock)','Euro','Heute / Morgen','Nächste Woche','Bahnhof / Haltestelle','Bitte / Danke','Geöffnet / Geschlossen'].map(w=>`<span class="tag">${w}</span>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🤖 Practice with AI</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="tag" onclick="askAI('Create a Hören Part 1 practice: describe 3 short scenarios in German and give me multiple choice questions about what was said.')" style="cursor:pointer">Practice Part 1</div>
+        <div class="tag" onclick="askAI('Give me 5 Hören Part 2 style statements in German and tell me if they are richtig or falsch.')" style="cursor:pointer">Practice Part 2</div>
+        <div class="tag" onclick="askAI('Create a short German dialogue between two people for me to answer comprehension questions about.')" style="cursor:pointer">Dialogue Comprehension</div>
+      </div>
+    </div>`;
+  }
+  else if(section==='skill-lesen'){
+    document.getElementById('topic-sub').textContent = 'Reading comprehension strategies · 3 parts · ~25 min';
+    c.innerHTML = `
+    <div class="card">
+      <div class="card-title">📖 Lesen — What to Expect</div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 1 — Signs and notices</div>
+        <div class="rule-body">Match 5 descriptions to 8 notices (signs, labels, posters). One mark each.</div>
+        <div class="rule-note">Read the description first, then scan the notices for keywords.</div>
+      </div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 2 — Short texts (emails, ads, messages)</div>
+        <div class="rule-body">Read 5 short texts. Mark richtig (right) or falsch (wrong).</div>
+        <div class="rule-note">Watch for negation: kein, nicht, nie — they change the meaning!</div>
+      </div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 3 — Fill in a form</div>
+        <div class="rule-body">Read a text and complete a form with personal details (name, address, age, etc.)</div>
+        <div class="rule-note">You are looking for: names, numbers, dates, addresses, jobs.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📰 Practice Reading Text</div>
+      <div class="reading-text">
+        Hallo! Ich heiße <strong>Anna Bauer</strong> und ich komme aus <strong>München</strong>, Deutschland. Ich bin <strong>28 Jahre alt</strong> und ich arbeite als <strong>Lehrerin</strong>. Ich wohne in der <strong>Hauptstraße 12</strong>. Ich spreche Deutsch und ein bisschen Englisch. In meiner Freizeit lese ich gern und gehe schwimmen. Ich bin verheiratet und habe <strong>zwei Kinder</strong>.
+      </div>
+      <div class="card-title" style="margin-top:12px">📋 Extract the information:</div>
+      <div class="vocab-grid" style="grid-template-columns:1fr 1fr">
+        <div class="vocab-cell header">Question</div>
+        <div class="vocab-cell header">Answer</div>
+        <div class="vocab-cell">Name?</div><div class="vocab-cell vocab-de">Anna Bauer</div>
+        <div class="vocab-cell">Herkunft (Origin)?</div><div class="vocab-cell vocab-de">München, Deutschland</div>
+        <div class="vocab-cell">Alter (Age)?</div><div class="vocab-cell vocab-de">28 Jahre alt</div>
+        <div class="vocab-cell">Beruf (Job)?</div><div class="vocab-cell vocab-de">Lehrerin</div>
+        <div class="vocab-cell">Adresse?</div><div class="vocab-cell vocab-de">Hauptstraße 12</div>
+        <div class="vocab-cell">Kinder?</div><div class="vocab-cell vocab-de">Zwei Kinder</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🤖 AI Reading Practice</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="tag" onclick="askAI('Write a short A1-level German notice (Anzeige) about renting an apartment. Then give me 3 richtig/falsch questions about it.')" style="cursor:pointer">Notice Practice</div>
+        <div class="tag" onclick="askAI('Write a short A1 email in German from one friend to another. Then ask me 3 comprehension questions.')" style="cursor:pointer">Email Practice</div>
+        <div class="tag" onclick="askAI('Write a short German text about a person and ask me to fill in a form with their details.')" style="cursor:pointer">Form Practice</div>
+      </div>
+    </div>`;
+  }
+  else if(section==='skill-schreiben'){
+    document.getElementById('topic-sub').textContent = 'Writing tasks with AI feedback · 2 parts · ~20 min';
+    c.innerHTML = `
+    <div class="card">
+      <div class="card-title">✍️ Schreiben — What to Expect</div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 1 — Fill in a form</div>
+        <div class="rule-body">Complete a registration form (Anmeldeformular) with your personal details: Vorname, Nachname, Adresse, Telefon, E-Mail, Geburtstag, Beruf, etc.</div>
+        <div class="rule-note">Memorize YOUR personal details in German before the exam!</div>
+      </div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 2 — Write a short message</div>
+        <div class="rule-body">Write a short message (email, note, postcard) of about 20–30 words. You are given 3 bullet points to address.</div>
+        <div class="rule-note">Use simple sentences. Cover ALL 3 bullet points. Greet and sign off.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 Your Personal Info in German</div>
+      <div class="grammar-rule">
+        <div class="rule-body">
+          Vorname: <code>Jimmy</code> · Nachname: <code>Maina</code><br>
+          Wohnort: <code>Nairobi, Kenia</code><br>
+          Beruf: <code>Datenanalyst</code> (Data Analyst)<br>
+          Muttersprache: <code>Englisch und Swahili</code><br>
+          Ich lerne Deutsch seit: <code>kurzer Zeit</code> (a short time)
+        </div>
+        <div class="rule-note">Practice filling in your details quickly — Part 1 is time-limited!</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">✍️ Practice: Write a Short Message</div>
+      <div class="writing-prompt">
+        <strong>Task:</strong> Your German friend Jana invites you to her birthday party on Saturday.<br>
+        Write her a short reply (20–30 words).<br>
+        • Say you are happy to come<br>
+        • Say what time you arrive<br>
+        • Ask what you should bring
+      </div>
+      <textarea class="writing-area" id="writing-area" placeholder="Liebe Jana,&#10;&#10;...&#10;&#10;Viele Grüße,&#10;Jimmy"></textarea>
+      <button class="check-writing-btn" onclick="checkWriting()">Get AI Feedback →</button>
+      <div class="writing-feedback hidden" id="writing-feedback"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">💡 Useful Phrases for Writing</div>
+      <div class="phrase-list">
+        ${[
+          {de:'Liebe/Lieber [Name],',en:'Dear [Name] (informal)'},
+          {de:'Sehr geehrte/r [Name],',en:'Dear [Name] (formal)'},
+          {de:'Ich freue mich auf...',en:'I am looking forward to...'},
+          {de:'Viele Grüße,',en:'Best regards,'},
+          {de:'Mit freundlichen Grüßen,',en:'Sincerely, (formal)'},
+          {de:'Danke für deine Einladung.',en:'Thanks for your invitation.'},
+          {de:'Ich komme gern.',en:'I will gladly come.'},
+          {de:'Ich kann leider nicht kommen.',en:'Unfortunately, I cannot come.'},
+          {de:'Was soll ich mitbringen?',en:'What should I bring?'},
+        ].map(p=>`<div class="phrase-row"><span class="phrase-de">${p.de}</span><span class="phrase-en">${p.en}</span></div>`).join('')}
+      </div>
+    </div>`;
+  }
+  else if(section==='skill-sprechen'){
+    document.getElementById('topic-sub').textContent = 'Speaking exam preparation · 3 parts · ~15 min';
+    c.innerHTML = `
+    <div class="card">
+      <div class="card-title">🗣️ Sprechen — What to Expect</div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 1 — Introduce yourself</div>
+        <div class="rule-body">Say your name, where you come from, where you live, what you do, your hobbies. ~1 minute.</div>
+        <div class="rule-note">Prepare and memorize your self-introduction NOW — it is always the same!</div>
+      </div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 2 — Ask and answer questions (card prompts)</div>
+        <div class="rule-body">You get a card with a topic. You ask your partner a question and answer their question. Topics: Wohnen, Familie, Essen, Hobbys, Arbeit, Freizeit.</div>
+        <div class="rule-note">Formula: Ask → Answer. Keep it simple. One or two sentences.</div>
+      </div>
+      <div class="grammar-rule">
+        <div class="rule-title">Part 3 — Spell something</div>
+        <div class="rule-body">Spell your name, your city, a word given to you. You must know the German alphabet!</div>
+        <div class="rule-note">German alphabet has the same letters + Ä, Ö, Ü, ß</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🎤 Your Self-Introduction (Memorize This!)</div>
+      <div class="speaking-card">
+        <div class="speaking-prompt">Stellen Sie sich vor!</div>
+        <div class="speaking-hint">Your model answer (adapt to your situation)</div>
+        <div class="speaking-example">
+          <strong>Hallo! Ich heiße Jimmy Maina.</strong><br>
+          Ich komme aus Kenia, aus Nairobi.<br>
+          Ich wohne in Nairobi.<br>
+          Ich bin Datenanalyst von Beruf.<br>
+          Ich spreche Englisch, Swahili und ein bisschen Deutsch.<br>
+          Meine Hobbys sind Reisen und Sport.<br>
+          Ich bin <em>[Ihr Alter]</em> Jahre alt.
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🃏 Part 2 — Question Card Practice</div>
+      <div class="speaking-card">
+        <div class="speaking-prompt">Topic: Wohnen (Housing)</div>
+        <div class="speaking-example">
+          <strong>You ask:</strong> Wo wohnen Sie? (Where do you live?)<br>
+          <strong>You answer:</strong> Ich wohne in Nairobi. Das ist in Kenia.
+        </div>
+      </div>
+      <div style="height:8px"></div>
+      <div class="speaking-card">
+        <div class="speaking-prompt">Topic: Essen & Trinken (Food)</div>
+        <div class="speaking-example">
+          <strong>You ask:</strong> Was essen Sie gern? (What do you like to eat?)<br>
+          <strong>You answer:</strong> Ich esse gern Reis und Gemüse.
+        </div>
+      </div>
+      <div style="height:8px"></div>
+      <div class="speaking-card">
+        <div class="speaking-prompt">Topic: Hobbys (Hobbies)</div>
+        <div class="speaking-example">
+          <strong>You ask:</strong> Was machen Sie in der Freizeit? (What do you do in your free time?)<br>
+          <strong>You answer:</strong> In der Freizeit reise ich gern und ich treibe Sport.
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔤 German Alphabet</div>
+      <div style="font-family:'Fraunces',serif;font-size:16px;line-height:2.2;letter-spacing:1px">
+        A(ah) · B(beh) · C(tseh) · D(deh) · E(eh) · F(eff) · G(geh) · H(hah) · I(ih) · J(yot) · K(kah) · L(ell) · M(emm) · N(enn) · O(oh) · P(peh) · Q(kuh) · R(err) · S(ess) · T(teh) · U(uh) · V(fau) · W(veh) · X(iks) · Y(üpsilon) · Z(tset)<br>
+        <span style="color:var(--gold)">Ä(äh) · Ö(öh) · Ü(üh) · ß(ess-tset)</span>
+      </div>
+      <div class="rule-note">Practice spelling: MAINA → M-A-I-N-A → emm-ah-ih-enn-ah</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🤖 AI Speaking Practice</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="tag" onclick="askAI('Act as my Goethe A1 examiner. Ask me the Part 1 Sprechen questions in German and give feedback on my answers in English.')" style="cursor:pointer">Simulate Part 1</div>
+        <div class="tag" onclick="askAI('Give me 5 Sprechen Part 2 card prompts with a question and example answer for each topic card.')" style="cursor:pointer">Card Practice</div>
+        <div class="tag" onclick="askAI('Give me 10 German words to spell out using the German alphabet. Correct my spelling.')" style="cursor:pointer">Spelling Drill</div>
+      </div>
+    </div>`;
+  }
+  markComplete(section);
+}
+
+// ============================================================
+// FLASHCARDS
+// ============================================================
+function renderFlashcards(){
+  const c = document.getElementById('content');
+  document.getElementById('topic-sub').textContent = 'Click card to flip · Use arrow buttons to navigate';
+  const deck = FLASHCARD_DECKS[fcState.deck] || FLASHCARD_DECKS.mixed;
+  const card = deck[fcState.idx] || deck[0];
+
+  c.innerHTML = `
+  <div class="card">
+    <div class="card-title">🃏 Flashcard Deck</div>
+    <div class="tags">
+      ${Object.keys(FLASHCARD_DECKS).map(k=>`
+        <span class="tag ${fcState.deck===k?'active':''}" onclick="switchDeck('${k}')">${k.charAt(0).toUpperCase()+k.slice(1)}</span>
+      `).join('')}
+    </div>
+  </div>
+  <div class="card flashcard-section">
+    <div class="flashcard-counter">${fcState.idx+1} / ${deck.length}</div>
+    <div class="flashcard-wrap" onclick="flipCard()">
+      <div class="flashcard ${fcState.flipped?'flipped':''}" id="fc">
+        <div class="card-face front">
+          <div class="fc-tag">DEUTSCH</div>
+          <div class="fc-word">${card.de}</div>
+          <div class="fc-sub">tap to reveal</div>
+        </div>
+        <div class="card-face back">
+          <div class="fc-tag">ENGLISH</div>
+          <div class="fc-word">${card.en}</div>
+          <div class="fc-sub">${card.ex}</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-hint">Tap the card to flip · Use buttons to navigate</div>
+    <div class="fc-controls">
+      <button class="fc-btn prev" onclick="prevCard()">← Prev</button>
+      <button class="fc-btn flip" onclick="flipCard()">Flip</button>
+      <button class="fc-btn next" onclick="nextCard()">Next →</button>
+    </div>
+  </div>`;
+}
+
+function flipCard(){
+  fcState.flipped = !fcState.flipped;
+  const fc = document.getElementById('fc');
+  if(fc) fc.classList.toggle('flipped');
+}
+
+function nextCard(){
+  const deck = FLASHCARD_DECKS[fcState.deck] || FLASHCARD_DECKS.mixed;
+  fcState.idx = (fcState.idx+1) % deck.length;
+  fcState.flipped = false;
+  renderFlashcards();
+}
+
+function prevCard(){
+  const deck = FLASHCARD_DECKS[fcState.deck] || FLASHCARD_DECKS.mixed;
+  fcState.idx = (fcState.idx-1+deck.length) % deck.length;
+  fcState.flipped = false;
+  renderFlashcards();
+}
+
+function switchDeck(d){
+  fcState.deck = d;
+  fcState.idx = 0;
+  fcState.flipped = false;
+  renderFlashcards();
+}
+
+// ============================================================
+// QUIZ
+// ============================================================
+function renderQuiz(){
+  const c = document.getElementById('content');
+  document.getElementById('topic-sub').textContent = `Question ${quizState.idx+1} of ${QUIZ_BANK.length} · Score: ${quizState.score}`;
+
+  if(quizState.idx >= QUIZ_BANK.length){
+    const pct = Math.round((quizState.score/QUIZ_BANK.length)*100);
+    c.innerHTML = `
+    <div class="card" style="text-align:center;padding:32px">
+      <div class="quiz-score">${quizState.score} / ${QUIZ_BANK.length}</div>
+      <div class="quiz-score-label">${pct}% — ${pct>=60?'✅ PASS level!':'Keep practicing!'}</div>
+      <div style="margin:20px 0;font-size:13px;color:var(--muted)">
+        ${pct>=80?'Ausgezeichnet! Excellent work!':pct>=60?'Gut gemacht! Good work!':'Üben Sie weiter! Keep practicing!'}
+      </div>
+      <button class="quiz-next" onclick="restartQuiz()">Start Again →</button>
+    </div>`;
+    return;
+  }
+
+  const q = QUIZ_BANK[quizState.idx];
+  c.innerHTML = `
+  <div class="card quiz-wrap">
+    <div class="card-title">❓ Question ${quizState.idx+1} of ${QUIZ_BANK.length}</div>
+    <div class="quiz-q">${q.q.replace(/'/g,"'")}</div>
+    <div class="quiz-opts">
+      ${q.opts.map((o,i)=>`
+        <button class="q-opt" id="opt-${i}" onclick="answerQuiz(${i})">${String.fromCharCode(65+i)}. ${o}</button>
+      `).join('')}
+    </div>
+    <div class="quiz-feedback hidden" id="quiz-fb"></div>
+    <button class="quiz-next hidden" id="quiz-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div class="card" style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px">
+    <div style="font-size:12px;color:var(--muted)">Score: <strong style="color:var(--ink)">${quizState.score}</strong></div>
+    <div style="display:flex;gap:4px">
+      ${QUIZ_BANK.map((_,i)=>`<div style="width:8px;height:8px;border-radius:50%;background:${i<quizState.idx?'var(--green)':i===quizState.idx?'var(--gold)':'var(--border)'}"></div>`).join('')}
+    </div>
+    <div style="font-size:12px;color:var(--muted)">${QUIZ_BANK.length-quizState.idx} left</div>
+  </div>`;
+}
+
+function answerQuiz(chosen){
+  if(quizState.answered) return;
+  quizState.answered = true;
+  const q = QUIZ_BANK[quizState.idx];
+  const correct = q.ans;
+  document.querySelectorAll('.q-opt').forEach((btn,i)=>{
+    btn.disabled = true;
+    if(i===correct) btn.classList.add('correct');
+    else if(i===chosen&&chosen!==correct) btn.classList.add('wrong');
+  });
+  if(chosen===correct) quizState.score++;
+  const fb = document.getElementById('quiz-fb');
+  fb.className = `quiz-feedback ${chosen===correct?'ok':'err'}`;
+  fb.textContent = (chosen===correct?'✓ Richtig! — ':' ✗ Falsch — ')+q.exp;
+  fb.classList.remove('hidden');
+  document.getElementById('quiz-next').classList.remove('hidden');
+  document.getElementById('topic-sub').textContent = `Question ${quizState.idx+1} of ${QUIZ_BANK.length} · Score: ${quizState.score}`;
+}
+
+function nextQuestion(){
+  quizState.idx++;
+  quizState.answered = false;
+  renderQuiz();
+}
+
+function restartQuiz(){
+  quizState = {idx:0, score:0, answered:false};
+  renderQuiz();
+}
+
+// ============================================================
+// MOCK EXAM
+// ============================================================
+function renderMockExam(){
+  const c = document.getElementById('content');
+  document.getElementById('topic-sub').textContent = 'Simulate real exam conditions';
+  c.innerHTML = `
+  <div class="card">
+    <div class="card-title">🏆 Mock Exam — Lesen (Reading) Part 2</div>
+    <div class="writing-prompt">
+      Read the 5 statements and mark <strong>richtig (R)</strong> or <strong>falsch (F)</strong> based on the text below.
+    </div>
+    <div class="reading-text">
+      <strong>Anzeige:</strong> Wir vermieten eine schöne 2-Zimmer-Wohnung in Berlin-Mitte. Die Wohnung hat 55 Quadratmeter und eine moderne Küche. Die Miete beträgt 850 Euro pro Monat, inklusive Nebenkosten. Die Wohnung ist ab dem 1. März frei. Sie ist im dritten Stock und hat keinen Aufzug. Haustiere sind nicht erlaubt. Bitte rufen Sie uns an: 030-12345678.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      ${[
+        'Die Wohnung hat drei Zimmer.',
+        'Die Miete kostet 850 Euro.',
+        'Die Wohnung ist ab März verfügbar.',
+        'Die Wohnung hat einen Aufzug.',
+        'Haustiere sind erlaubt.'
+      ].map((stmt,i)=>`
+        <div class="phrase-row" style="justify-content:flex-start;gap:16px">
+          <span style="font-size:12px;font-weight:500">${i+1}. ${stmt}</span>
+          <label style="font-size:12px;cursor:pointer"><input type="radio" name="q${i}" value="R"> Richtig</label>
+          <label style="font-size:12px;cursor:pointer"><input type="radio" name="q${i}" value="F"> Falsch</label>
+        </div>
+      `).join('')}
+    </div>
+    <button class="check-writing-btn" style="margin-top:12px" onclick="checkMockExam()">Check Answers →</button>
+    <div class="writing-feedback hidden" id="mock-feedback"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">✍️ Mock Exam — Schreiben Part 2</div>
+    <div class="writing-prompt">
+      <strong>Task:</strong> Your friend Thomas asks you about your German course. Write him a short message (20–30 words).<br>
+      • When is the course?<br>
+      • Do you like it?<br>
+      • What are you learning?
+    </div>
+    <textarea class="writing-area" id="mock-writing" placeholder="Hallo Thomas,&#10;&#10;...&#10;&#10;Viele Grüße,&#10;Jimmy" style="min-height:80px"></textarea>
+    <button class="check-writing-btn" onclick="checkMockWriting()">Get AI Feedback →</button>
+    <div class="writing-feedback hidden" id="mock-writing-fb"></div>
+  </div>`;
+}
+
+function checkMockExam(){
+  const answers = ['F','R','R','F','F'];
+  const userAnswers = answers.map((_,i)=>{
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    return sel?sel.value:null;
+  });
+  const score = userAnswers.filter((a,i)=>a===answers[i]).length;
+  const fb = document.getElementById('mock-feedback');
+  fb.className = `writing-feedback`;
+  fb.innerHTML = `Score: <strong>${score}/5</strong><br><br>`+
+    answers.map((a,i)=>`${i+1}. ${userAnswers[i]===a?'✅':'❌'} Correct: <strong>${a}</strong>${userAnswers[i]&&userAnswers[i]!==a?' (You said: '+userAnswers[i]+')':''}`).join('<br>');
+  fb.classList.remove('hidden');
+}
+
+// ============================================================
+// AI TUTOR
+// ============================================================
+function renderAITutor(){
+  const c = document.getElementById('content');
+  document.getElementById('topic-sub').textContent = 'Ask anything · German corrections · Explanations · Quizzes';
+  c.style.display = 'none';
+  document.getElementById('chat-input-wrap').classList.remove('hidden');
+
+  const main = document.getElementById('main');
+  let chatArea = document.getElementById('chat-area');
+  if(!chatArea){
+    chatArea = document.createElement('div');
+    chatArea.id = 'chat-area';
+    chatArea.className = 'chat-msgs';
+    main.insertBefore(chatArea, document.getElementById('chat-input-wrap'));
+  }
+  chatArea.style.display = 'flex';
+
+  if(chatHistory.length === 0){
+    chatArea.innerHTML = `
+    <div class="msg-row ai">
+      <div class="msg-av">A1</div>
+      <div class="msg-bubble">
+        <strong>Guten Tag, Jimmy!</strong> I am your German A1 AI Tutor. I can help you with:<br><br>
+        • Grammar explanations with examples<br>
+        • Vocabulary practice and translation<br>
+        • Writing corrections and feedback<br>
+        • Speaking preparation and role-play<br>
+        • Custom quizzes and exercises<br><br>
+        Ask me anything in <em>English or German</em>!
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;padding:0 0 4px 42px">
+      ${['Quiz me on articles','Correct my German sentence','Explain modal verbs','Give me a speaking exercise','What are common A1 mistakes?'].map(p=>`
+        <div class="tag" onclick="askAI('${p}')" style="cursor:pointer">${p}</div>
+      `).join('')}
+    </div>`;
+  } else {
+    renderChatHistory();
+  }
+
+  const input = document.getElementById('chat-input');
+  input.onkeydown = (e)=>{
+    if(e.key==='Enter' && !e.shiftKey){e.preventDefault();sendMessage();}
+  };
+}
+
+function renderChatHistory(){
+  const chatArea = document.getElementById('chat-area');
+  if(!chatArea) return;
+  chatArea.innerHTML = chatHistory.map(m=>`
+    <div class="msg-row ${m.role}">
+      <div class="msg-av">${m.role==='ai'?'A1':'👤'}</div>
+      <div class="msg-bubble">${formatMsg(m.content)}</div>
+    </div>
+  `).join('');
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function formatMsg(text){
+  return text
+    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g,'<em>$1</em>')
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/\n/g,'<br>');
+}
+
+async function sendMessage(){
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if(!text) return;
+  input.value = '';
+  chatHistory.push({role:'user', content:text});
+  appendMsg('user', text);
+  await callAI();
+}
+
+function askAI(prompt){
+  chatHistory.push({role:'user', content:prompt});
+  const navItem = document.querySelector('[data-section="ai-tutor"]');
+  navigate(navItem,'ai-tutor');
+  setTimeout(()=>{ appendMsg('user', prompt); callAI(); }, 200);
+}
+
+function appendMsg(role, text){
+  let chatArea = document.getElementById('chat-area');
+  if(!chatArea) return;
+  const div = document.createElement('div');
+  div.className = `msg-row ${role}`;
+  div.innerHTML = `<div class="msg-av">${role==='ai'?'A1':'👤'}</div><div class="msg-bubble">${formatMsg(text)}</div>`;
+  div.style.animation = 'fadeIn 0.25s ease';
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function showTyping(){
+  let chatArea = document.getElementById('chat-area');
+  if(!chatArea) return;
+  const div = document.createElement('div');
+  div.className = 'msg-row ai';
+  div.id = 'typing-indicator';
+  div.innerHTML = `<div class="msg-av">A1</div><div class="msg-bubble"><div class="typing-wrap"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function removeTyping(){
+  const t = document.getElementById('typing-indicator');
+  if(t) t.remove();
+}
+
+async function callAI(){
+  document.getElementById('send-btn').disabled = true;
+  showTyping();
+
+  const messages = chatHistory.filter(m=>m.role!=='ai').length>0
+    ? chatHistory.map(m=>({role:m.role==='ai'?'assistant':'user', content:m.content}))
+    : [{role:'user',content:chatHistory[chatHistory.length-1]?.content||'Hello'}];
+
+  try{
+    const res = await fetch(API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:`You are an expert German A1 language tutor helping Jimmy Maina (a data analyst from Nairobi, Kenya) prepare for the Goethe-Zertifikat A1 exam. 
+
+Your teaching style:
+- Keep explanations clear and concise
+- Give practical examples using everyday German
+- When correcting German, show: ✗ Wrong → ✓ Correct → Explanation
+- Use **bold** for German words and key grammar terms
+- Use *italics* for example sentences
+- Reference the A1 exam context when relevant
+- Be encouraging and specific
+- If asked for exercises, make them interactive (numbered questions with answers following after)
+
+Always tailor your examples to be relevant to daily life situations tested in the Goethe A1 exam.`,
+        messages
+      })
+    });
+    const data = await res.json();
+    removeTyping();
+    const reply = data.content?.[0]?.text || 'Entschuldigung — something went wrong. Please try again.';
+    chatHistory.push({role:'ai', content:reply});
+    appendMsg('ai', reply);
+  } catch(e){
+    removeTyping();
+    appendMsg('ai','⚠️ Connection error. Please check your internet and try again.');
+  }
+  document.getElementById('send-btn').disabled = false;
+}
+
+// ============================================================
+// WRITING CHECK
+// ============================================================
+async function checkWriting(){
+  const text = document.getElementById('writing-area')?.value?.trim();
+  if(!text){ alert('Please write something first!'); return; }
+  const fb = document.getElementById('writing-feedback');
+  fb.className = 'writing-feedback';
+  fb.textContent = 'Checking your writing...';
+  fb.classList.remove('hidden');
+
+  try{
+    const res = await fetch(API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:600,
+        system:'You are a Goethe A1 German examiner. Give concise feedback on student writing. Format: 1) Grammar errors corrected 2) Vocabulary suggestions 3) Overall score /15 4) One sentence of encouragement.',
+        messages:[{role:'user',content:`Please check this German A1 exam writing task:\n\n"${text}"\n\nThe task was: Reply to a birthday party invitation, say you are coming, what time you arrive, and what you bring.`}]
+      })
+    });
+    const data = await res.json();
+    fb.innerHTML = formatMsg(data.content?.[0]?.text || 'Error');
+  } catch(e){
+    fb.textContent = 'Error connecting to AI. Please try again.';
+  }
+}
+
+async function checkMockWriting(){
+  const text = document.getElementById('mock-writing')?.value?.trim();
+  if(!text){ alert('Please write something first!'); return; }
+  const fb = document.getElementById('mock-writing-fb');
+  fb.className = 'writing-feedback';
+  fb.textContent = 'Analysing...';
+  fb.classList.remove('hidden');
+  try{
+    const res = await fetch(API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:500,
+        system:'Goethe A1 examiner. Check if the student addressed all 3 bullet points. List errors. Give /15 score.',
+        messages:[{role:'user',content:`Task: Write to Thomas about your German course - when it is, if you like it, what you are learning.\n\nStudent wrote:\n"${text}"`}]
+      })
+    });
+    const data = await res.json();
+    fb.innerHTML = formatMsg(data.content?.[0]?.text||'Error');
+  } catch(e){
+    fb.textContent = 'Error. Please try again.';
+  }
+}
+
+// ============================================================
+// MODE TABS
+// ============================================================
+function renderModeTabs(tabs, activeIdx, callback){
+  const mt = document.getElementById('mode-tabs');
+  mt.innerHTML = tabs.map((t,i)=>`
+    <button class="tab-btn ${i===activeIdx?'active':''}" onclick="switchMode(this,'${t}',${i})">${t}</button>
+  `).join('');
+  mt._callback = callback;
+}
+
+function switchMode(btn, label, idx){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const mt = document.getElementById('mode-tabs');
+  if(mt._callback) mt._callback(label, idx);
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function markComplete(section){
+  completedSections.add(section);
+  const total = 28;
+  const pct = Math.round((completedSections.size/total)*100);
+  document.getElementById('progress-bar').style.width = pct+'%';
+  document.getElementById('progress-pct').textContent = pct+'%';
+  document.getElementById('topics-done').textContent = completedSections.size+' topics';
+
+  // add checkmark to nav
+  const navItem = document.querySelector(`[data-section="${section}"]`);
+  if(navItem && !navItem.querySelector('.nav-check')){
+    const check = document.createElement('span');
+    check.className = 'nav-check';
+    check.textContent = '✓';
+    navItem.appendChild(check);
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+renderWelcome();
+</script>
+</body>
+</html>
